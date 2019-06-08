@@ -6,7 +6,7 @@
       become: true
       package:
         name: "{{ item }}"
-          state: latest
+        state: latest
       with_items:
         - bind-utils
         - net-tools
