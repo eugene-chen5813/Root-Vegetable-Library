@@ -1,2 +1,2 @@
-#LoadBalancer for webservers
-#Will be using HAProxy
+# LoadBalancer for webservers
+# Will be using HAProxy
