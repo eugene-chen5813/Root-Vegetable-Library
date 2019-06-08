@@ -1,2 +1,24 @@
 # Base configuration for containers/VM's
 ---
+- hosts: all
+  tasks:
+    - name: Install common tools for all virtual machines
+      become: true
+      package:
+        name: "{{ item }}"
+          state: latest
+        with_items:
+          - bind-utils
+          - net-tools
+          - vim
+          - wget
+    - name: YUM module to upgrade all packages
+      yum:
+        name: "*"
+        state: latest
+      become: true
+    - name: Install EPEL
+      yum:
+        name: epel-release
+        state: latest
+      become: true
