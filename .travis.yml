@@ -7,3 +7,13 @@ install: pip install ansible ansible-lint yamllint
 script:
   - ansible-lint ./
   - yamllint ./
+
+branches:
+  only:
+    - potato
+    - Turnip
+
+notifications:
+  email:
+    on_success: never
+    on_failure: never
