@@ -7,11 +7,11 @@
       package:
         name: "{{ item }}"
           state: latest
-        with_items:
-          - bind-utils
-          - net-tools
-          - vim
-          - wget
+      with_items:
+        - bind-utils
+        - net-tools
+        - vim
+        - wget
     - name: YUM module to upgrade all packages
       yum:
         name: "*"
