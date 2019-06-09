@@ -1,1 +1,74 @@
 # Database with mySQL + Replication
+---
+- hosts: localhost
+  become: true
+  tasks:
+    - name: Create a docker network
+      docker_network:
+        name: WebAppNet
+        ipam_config:
+          - subnet: 10.0.1.0/24
+        state: present
+    - name: Build docker image from Dockerfile
+      docker_image:
+        build:
+          path: ./database
+          pull: false
+        name: database
+        source: build
+        force_source: true
+      tags: build
+    - name: Running the container
+      docker_container:
+        name: database
+        image: database
+        pull: false
+        ports: 
+          - "3306:3306"
+          - "33060:33060"
+        expose:
+          - "22"
+        networks:
+          - name: WebAppNet
+            ipv4_address: "10.0.1.200"
+            aliases:
+              - web1
+        env:
+          MYSQL_ROOT_PASSWORD: 'honey'
+          MYSQL_DATABASE: 'library'
+          MYSQL_USER: 'farmer'
+          MYSQL_PASSWORD: 'honey'
+      tags: run
+- hosts: database
+  become: true
+  vars:
+    users: ['honey']
+  tasks:
+    - name: Adds the user 'honey' to the wheel group
+      become: true
+      user:
+              name: "{{item}}"
+              shell: /bin/bash
+              group: wheel
+      loop: "{{users}}"
+    - file:
+              path: /home/{{item}}
+              mode: 0750
+      loop: "{{users}}"
+      become: true
+    - name: Set authorized key
+      become: true
+      authorized_key:
+              user: "{{item}}"
+              state: present
+              key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+      loop: "{{users}}"
+    - lineinfile:
+              path: /etc/sudoers.d/{{item}}
+              line: '{{item}} ALL=(root) NOPASSWD:ALL'
+              create: yes
+              mode: 0440
+              validate: '/usr/sbin/visudo -cf %s'
+      become: true
+      loop: "{{users}}"
+  tags: setup

@@ -1,2 +1,5 @@
 [webserver]
 webserver1.test ansible_host=10.0.1.100
+
+[database]
+database1.test ansible_host=10.0.1.200
