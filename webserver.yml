@@ -3,6 +3,12 @@
 - hosts: localhost
   become: true
   tasks:
+    - name: Create a docker network
+      docker_network:
+        name: WebAppNet
+        ipam_config:
+          - subnet: 10.0.1.0/24
+        state: present
     - name: Build docker image from Dockerfile
       docker_image:
         build:
@@ -10,11 +16,50 @@
           pull: false
         name: webserver
         source: build
+        force: true
       tags: build
     - name: Running the container
       docker_container:
         name: webserver
         image: webserver
-        ports: 80:80
+        ports: 
+          - "80:80"
         pull: false
+        networks:
+          - name: WebAppNet
+            ipv4_address: "10.0.1.100"
+            aliases:
+              - web1
       tags: run
+- hosts: webserver
+  become: true
+  vars:
+    users: ['honey']
+  tasks:
+    - name: Adds the user 'honey' to the wheel group
+      become: true
+      user:
+              name: "{{item}}"
+              shell: /bin/bash
+              group: wheel
+      loop: "{{users}}"
+    - file:
+              path: /home/{{item}}
+              mode: 0750
+      loop: "{{users}}"
+      become: true
+    - name: Set authorized key
+      become: true
+      authorized_key:
+              user: "{{item}}"
+              state: present
+              key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+      loop: "{{users}}"
+    - lineinfile:
+              path: /etc/sudoers.d/{{item}}
+              line: '{{item}} ALL=(root) NOPASSWD:ALL'
+              create: yes
+              mode: 0440
+              validate: '/usr/sbin/visudo -cf %s'
+      become: true
+      loop: "{{users}}"
