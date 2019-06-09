@@ -1,23 +1,22 @@
 # Ansible playbook for webserver
 ---
 - hosts: webserver
-  remote_user: turnip
-  become: yes
+  become: true
   become_method: sudo
   tasks:
-    # - name: Install pip
-    #   yum: name=python-pip state=present
-    # - name: Install docker-py package
-    #   pip: name=docker-py
     - name: Build docker image from Dockerfile
       docker_image:
-        name: web
-        path: docker
-        state: build
+        build:
+          path: ./webserver
+          pull: no
+        source: build
+        state: present
     - name: Running the container
       docker_container:
-        image: web:latest
-        path: docker
+        name: nginx
+        image: web
+        ports: 80:8080
         state: running
+      register: web1
     - name: Check if Nginx container is running
       shell: docker ps
