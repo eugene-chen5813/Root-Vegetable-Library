@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  become: true
+  tasks: 
+    - name: Build docker image from Dockerfile
+      docker_image:
+        build:
+          path: ./webserver
+          pull: no
+        name: web
+        state: present
+        source: build
+    - name: Running the container
+      docker_container:
+        name: web
+        image: web
+        state: present
+        ports: 80:80
+      register: web1
+      

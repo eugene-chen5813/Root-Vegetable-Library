@@ -5,10 +5,10 @@
   become: yes
   become_method: sudo
   tasks:
-    - name: Install pip
-      yum: name=python-pip state=present
-    - name: Install docker-py package
-      pip: name=docker-py
+    # - name: Install pip
+    #   yum: name=python-pip state=present
+    # - name: Install docker-py package
+    #   pip: name=docker-py
     - name: Build docker image from Dockerfile
       docker_image:
         name: web

@@ -1,2 +1,2 @@
 [webserver]
-webserver.1 ansible_host=10.101.1.2
+webserver1.test
