@@ -9,6 +9,7 @@
         ipam_config:
           - subnet: 10.0.1.0/24
         state: present
+      tags: network
     - name: Build docker image from Dockerfile
       docker_image:
         build:
@@ -33,6 +34,7 @@
             ipv4_address: "10.0.1.200"
             aliases:
               - web1
+        networks_cli_compatible: false
         env:
           MYSQL_ROOT_PASSWORD: 'honey'
           MYSQL_DATABASE: 'library'
