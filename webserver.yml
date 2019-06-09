@@ -2,12 +2,12 @@
 ---
 - hosts: localhost
   become: true
-  tasks: 
+  tasks:
     - name: Build docker image from Dockerfile
       docker_image:
         build:
           path: ./webserver
-          pull: no
+          pull: false
         name: webserver
         source: build
       tags: build
@@ -16,5 +16,5 @@
         name: webserver
         image: webserver
         ports: 80:80
-        pull: no
+        pull: false
       tags: run
