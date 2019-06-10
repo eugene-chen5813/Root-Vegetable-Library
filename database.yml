@@ -26,7 +26,7 @@
         pull: false
         ports:
           - "3306:3306"
-          - "33060:33060"
+          - "33060:3306"
         expose:
           - "22"
         networks:

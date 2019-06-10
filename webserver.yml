@@ -16,7 +16,7 @@
           pull: false
         name: webserver
         source: build
-        force: true
+        force_source: true
       tags: build
     - name: Running the container
       docker_container:
