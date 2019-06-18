@@ -1,5 +1,9 @@
 [webserver]
-webserver1.test ansible_host=10.0.1.100
+webserver1 ansible_host=10.101.0.2
+webserver2 ansible_host=10.101.0.3
+
+[loadbalancer]
+loadbalancer ansible_host=10.101.0.4
 
 [database]
-database1.test ansible_host=10.0.1.200
+database ansible_host=10.101.0.5
