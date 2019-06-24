@@ -5,6 +5,7 @@
 #### Tools:
 - Provisioning: Ansible
 - Platform: Centos 7 (Virtual Machines)
-- Virtualization/Containers: Docker
+- Virtualization/Containers: Nomad > Docker
 - Webserver: nginx
 - Web App Framework: Django
+- Monitoring: Prometheus and Grafana
