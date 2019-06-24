@@ -4,10 +4,11 @@
 # Here we create the variable `nodes`, where we define each server with its
 # hostname and IP address.
 nodes = [
-  { :hostname => 'webserver1', :ip => '10.101.0.2' },
-  { :hostname => 'webserver2', :ip => '10.101.0.3' },
-  { :hostname => 'loadbalancer', :ip => '10.101.0.4' },
-  { :hostname => 'database', :ip => '10.101.0.5' }
+  { :hostname => 'webserver1.test', :ip => '10.101.0.2' },
+  { :hostname => 'webserver2.test', :ip => '10.101.0.3' },
+  { :hostname => 'loadbalancer.test', :ip => '10.101.0.4' },
+  { :hostname => 'database1.test', :ip => '10.101.0.5' },
+  { :hostname => 'database2.test', :ip => '10.101.0.6' }
 ]
 
 

@@ -1,0 +1,7 @@
+---
+- name: Create Docker Contain
+  docker_image:
+          name: web
+          path: docker
+          state: build
+
