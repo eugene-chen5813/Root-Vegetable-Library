@@ -6,8 +6,8 @@
 nodes = [
   { :hostname => 'webserver1', :ip => '10.101.0.2' },
   { :hostname => 'webserver2', :ip => '10.101.0.3' },
-  { :hostname => 'loadbalancer', :ip => '10.101.0.4' },
-  { :hostname => 'database', :ip => '10.101.0.5' }
+  { :hostname => 'loadbalancer1', :ip => '10.101.0.4' },
+  { :hostname => 'database1', :ip => '10.101.0.5' }
 ]
 
 

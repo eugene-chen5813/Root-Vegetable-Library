@@ -3,7 +3,7 @@ webserver1 ansible_host=10.101.0.2
 webserver2 ansible_host=10.101.0.3
 
 [loadbalancer]
-loadbalancer ansible_host=10.101.0.4
+loadbalancer1 ansible_host=10.101.0.4
 
 [database]
-database ansible_host=10.101.0.5
+database1 ansible_host=10.101.0.5
